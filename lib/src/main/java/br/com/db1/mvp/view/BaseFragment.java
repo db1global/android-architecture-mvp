@@ -244,8 +244,9 @@ public abstract class BaseFragment extends Fragment implements IView {
         try {
             validateView();
             viewDecorator.showEmptyState();
-
-        } catch (IllegalViewStateException | IllegalStateException e) {
+        } catch (IllegalViewStateException e) {
+            LogUtils.info(TAG, e);
+        }catch (IllegalStateException e){
             LogUtils.error(TAG, e);
         }
     }
@@ -255,8 +256,9 @@ public abstract class BaseFragment extends Fragment implements IView {
         try {
             validateView();
             viewDecorator.hideEmptyState();
-
-        } catch (IllegalViewStateException | IllegalStateException e) {
+        } catch (IllegalViewStateException e) {
+            LogUtils.info(TAG, e);
+        }catch (IllegalStateException e){
             LogUtils.error(TAG, e);
         }
     }
