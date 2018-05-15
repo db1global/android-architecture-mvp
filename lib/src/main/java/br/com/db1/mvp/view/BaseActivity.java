@@ -16,7 +16,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import br.com.db1.mvp.util.LogUtils;
-import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 
 
@@ -49,7 +48,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         setContentView(getContentViewRes());
-        ButterKnife.bind(this);
 
         viewDecorator = new BaseViewDecorator(this);
         setupStatusBarTransparency(isStatusBarTransparent());

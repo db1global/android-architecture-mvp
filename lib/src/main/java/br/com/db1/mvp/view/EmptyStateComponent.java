@@ -11,10 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import br.com.db1.mvp.R;
-import br.com.db1.mvp.R2;
 import br.com.db1.mvp.util.LogUtils;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by andre.moraes on 16/02/2018.
@@ -23,9 +20,7 @@ public class EmptyStateComponent extends RelativeLayout implements IEmptyStateCo
 
     private static final String TAG = EmptyStateComponent.class.getSimpleName();
 
-    @BindView(R2.id.cpt_empty_state_iv_image)
     ImageView ivImage;
-    @BindView(R2.id.cpt_empty_state_tv_message)
     TextView tvMessage;
 
     private ViewGroup parent;
@@ -33,9 +28,9 @@ public class EmptyStateComponent extends RelativeLayout implements IEmptyStateCo
 
     public EmptyStateComponent(Context context) {
         super(context);
-
         LayoutInflater.from(context).inflate(R.layout.component_empty_state, this);
-        ButterKnife.bind(this);
+        ivImage = findViewById(R.id.cpt_empty_state_iv_image);
+        tvMessage = findViewById(R.id.cpt_empty_state_tv_message);
     }
 
     public EmptyStateComponent setParent(ViewGroup parent) {
