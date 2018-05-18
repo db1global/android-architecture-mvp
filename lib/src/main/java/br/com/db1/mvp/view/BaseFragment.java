@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import br.com.db1.mvp.util.LogUtils;
-import butterknife.ButterKnife;
 
 /**
  * Created by andre.moraes on 16/02/2018.
@@ -52,10 +51,7 @@ public abstract class BaseFragment extends Fragment implements IView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getContentViewRes(), container, false);
-        ButterKnife.bind(this, view);
-
-        return view;
+        return inflater.inflate(getContentViewRes(), container, false);
     }
 
     @Override
