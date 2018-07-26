@@ -38,6 +38,18 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     private BaseViewDecorator viewDecorator;
 
+    protected void setViewDecorator(BaseViewDecorator viewDecorator) {
+        this.viewDecorator = viewDecorator;
+    }
+
+    protected void addProgressDialogLayout(@LayoutRes int layout){
+        viewDecorator.setProgressDialogLayout(layout);
+    }
+
+    protected void addGenericDialogLayout(@LayoutRes int layout){
+        viewDecorator.setGenericDialogLayout(layout);
+    }
+
     protected Boolean isStatusBarTransparent() {
         return false;
     }

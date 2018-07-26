@@ -1,8 +1,10 @@
 package br.com.db1.mvp.view;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -20,6 +22,10 @@ public class BaseViewDecorator implements IView {
     private FragmentActivity parentActivity;
     private IEmptyStateComponent emptyStateComponent;
     private ProgressDialog progressDialog;
+    private @LayoutRes
+    int customGenericDialogLayout;
+    private @LayoutRes
+    int customProgressDialogLayout;
 
     public BaseViewDecorator(@NonNull FragmentActivity parentActivity) {
         this(parentActivity, null);
@@ -31,6 +37,8 @@ public class BaseViewDecorator implements IView {
         this.emptyStateComponent = emptyStateComponent;
         this.progressDialog = new ProgressDialog(parentActivity);
         this.progressDialog.setCanceledOnTouchOutside(false);
+        this.customProgressDialogLayout = 0;
+        this.customGenericDialogLayout = 0;
     }
 
     @Override
@@ -46,24 +54,30 @@ public class BaseViewDecorator implements IView {
 
     @Override
     public void showMessage(@StringRes int titleRes, @NonNull String message) {
-        DialogFactory.makeOneOptionDialog(parentActivity,
+        Dialog dialog = DialogFactory.makeOneOptionDialog(parentActivity,
                 parentActivity.getString(titleRes),
                 message,
                 parentActivity.getString(R.string.ok),
-                null)
-                .show();
+                null);
+        if (customGenericDialogLayout != 0) {
+            dialog.setContentView(customGenericDialogLayout);
+        }
+        dialog.show();
     }
 
     @Override
     public void showMessage(@StringRes int titleRes, @NonNull String message,
                             @Nullable DialogInterface.OnClickListener onEvent) {
 
-        DialogFactory.makeOneOptionDialog(parentActivity,
+        Dialog dialog = DialogFactory.makeOneOptionDialog(parentActivity,
                 parentActivity.getString(titleRes),
                 message,
                 parentActivity.getString(R.string.ok),
-                onEvent)
-                .show();
+                onEvent);
+        if (customGenericDialogLayout != 0) {
+            dialog.setContentView(customGenericDialogLayout);
+        }
+        dialog.show();
     }
 
 
@@ -85,48 +99,61 @@ public class BaseViewDecorator implements IView {
                           @Nullable DialogInterface.OnClickListener onPositiveEvent,
                           @StringRes int negativeLabel,
                           @Nullable DialogInterface.OnClickListener onNegativeEvent) {
-        DialogFactory.makeYesNoDialog(
+        Dialog dialog = DialogFactory.makeYesNoDialog(
                 parentActivity,
                 parentActivity.getString(titleRes),
                 message,
                 parentActivity.getString(positiveLabel),
                 onPositiveEvent,
                 parentActivity.getString(negativeLabel),
-                onNegativeEvent)
-                .show();
+                onNegativeEvent);
+        if (customGenericDialogLayout != 0) {
+            dialog.setContentView(customGenericDialogLayout);
+        }
+        dialog.show();
     }
 
     @Override
     public void showMessage(@DrawableRes int iconRes, @StringRes int titleRes, @NonNull String message,
                             @Nullable DialogInterface.OnClickListener onEvent) {
-        DialogFactory.makeDialogNoAction(parentActivity,
+        Dialog dialog = DialogFactory.makeDialogNoAction(parentActivity,
                 parentActivity.getString(titleRes),
                 message,
                 iconRes);
+        if (customGenericDialogLayout != 0) {
+            dialog.setContentView(customGenericDialogLayout);
+        }
+        dialog.show();
     }
 
     @Override
     public void showMessageWithoutTitle(int messageRes,
                                         @StringRes int buttonLabel,
                                         @Nullable DialogInterface.OnClickListener onEvent) {
-        DialogFactory.makeDialogNoTitle(
+        Dialog dialog = DialogFactory.makeDialogNoTitle(
                 parentActivity,
                 parentActivity.getString(messageRes),
                 parentActivity.getString(buttonLabel),
-                onEvent)
-                .show();
+                onEvent);
+        if (customGenericDialogLayout != 0) {
+            dialog.setContentView(customGenericDialogLayout);
+        }
+        dialog.show();
     }
 
     @Override
     public void showMessageWithoutTitle(@NonNull String message,
                                         @StringRes int buttonLabel,
                                         @Nullable DialogInterface.OnClickListener onEvent) {
-        DialogFactory.makeDialogNoTitle(
+        Dialog dialog = DialogFactory.makeDialogNoTitle(
                 parentActivity,
                 message,
                 parentActivity.getString(buttonLabel),
-                onEvent)
-                .show();
+                onEvent);
+        if (customGenericDialogLayout != 0) {
+            dialog.setContentView(customGenericDialogLayout);
+        }
+        dialog.show();
     }
 
     @Override
@@ -134,10 +161,14 @@ public class BaseViewDecorator implements IView {
                             @StringRes int titleRes,
                             @StringRes int messageRes,
                             @Nullable DialogInterface.OnClickListener onEvent) {
-        DialogFactory.makeDialogNoAction(parentActivity,
+        Dialog dialog = DialogFactory.makeDialogNoAction(parentActivity,
                 parentActivity.getString(titleRes),
                 parentActivity.getString(messageRes),
                 iconRes);
+        if (customGenericDialogLayout != 0) {
+            dialog.setContentView(customGenericDialogLayout);
+        }
+        dialog.show();
     }
 
     @Override
@@ -145,6 +176,9 @@ public class BaseViewDecorator implements IView {
         progressDialog.setMessage(StringUtils.isNotEmpty(message) ? message :
                 parentActivity.getString(R.string.progress_message_default));
         progressDialog.setCancelable(false);
+        if (customProgressDialogLayout != 0) {
+            progressDialog.setContentView(customGenericDialogLayout);
+        }
         progressDialog.show();
     }
 
@@ -152,6 +186,9 @@ public class BaseViewDecorator implements IView {
     public void showProgress(@StringRes int messageRes) {
         progressDialog.setMessage(parentActivity.getString(messageRes));
         progressDialog.setCancelable(false);
+        if (customProgressDialogLayout != 0) {
+            progressDialog.setContentView(customGenericDialogLayout);
+        }
         progressDialog.show();
     }
 
@@ -174,4 +211,11 @@ public class BaseViewDecorator implements IView {
         }
     }
 
+    public void setProgressDialogLayout(@LayoutRes int layout) {
+        this.customProgressDialogLayout = layout;
+    }
+
+    public void setGenericDialogLayout(@LayoutRes int layout) {
+        this.customGenericDialogLayout = layout;
+    }
 }
