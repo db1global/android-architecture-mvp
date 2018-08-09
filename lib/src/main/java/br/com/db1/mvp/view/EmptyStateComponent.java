@@ -26,21 +26,13 @@ public class EmptyStateComponent extends RelativeLayout implements IEmptyStateCo
     private ViewGroup parent;
     private ViewGroup target;
 
-    public EmptyStateComponent(Context context) {
+    public EmptyStateComponent(Context context, ViewGroup parent, ViewGroup target) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.component_empty_state, this);
         ivImage = findViewById(R.id.cpt_empty_state_iv_image);
         tvMessage = findViewById(R.id.cpt_empty_state_tv_message);
-    }
-
-    public EmptyStateComponent setParent(ViewGroup parent) {
         this.parent = parent;
-        return this;
-    }
-
-    public EmptyStateComponent setTarget(ViewGroup target) {
         this.target = target;
-        return this;
     }
 
     public EmptyStateComponent setImage(@DrawableRes int imageRes) {
