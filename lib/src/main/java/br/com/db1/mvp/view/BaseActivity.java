@@ -38,6 +38,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     private BaseViewDecorator viewDecorator;
 
+    protected void setViewDecorator(BaseViewDecorator viewDecorator) {
+        this.viewDecorator = viewDecorator;
+    }
+
     protected Boolean isStatusBarTransparent() {
         return false;
     }

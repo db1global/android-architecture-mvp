@@ -1,6 +1,5 @@
 package br.com.db1.mvp.view;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
@@ -14,7 +13,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 import br.com.db1.mvp.util.LogUtils;
 
@@ -24,7 +22,6 @@ import br.com.db1.mvp.util.LogUtils;
 public abstract class BaseFragment extends Fragment implements IView {
 
     private static final String TAG = BaseFragment.class.getSimpleName();
-    private static final int DEFAULT_EMPTY_INT = 0;
 
     protected abstract
     @LayoutRes
@@ -58,10 +55,11 @@ public abstract class BaseFragment extends Fragment implements IView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentActivity activity = getActivity();
-        if (activity == null)
+        if (activity == null) {
             throw new RuntimeException();
-        else
-            viewDecorator = new BaseViewDecorator(activity);
+        } else {
+            viewDecorator = new BaseViewDecorator(getContext());
+        }
         initializeComponents();
     }
 
@@ -263,14 +261,4 @@ public abstract class BaseFragment extends Fragment implements IView {
         }
     }
 
-    public void closeKeyBoard(View view) {
-        Context context = getContext();
-        if (context != null) {
-            InputMethodManager imm = (InputMethodManager) context
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), DEFAULT_EMPTY_INT);
-            }
-        }
-    }
 }
