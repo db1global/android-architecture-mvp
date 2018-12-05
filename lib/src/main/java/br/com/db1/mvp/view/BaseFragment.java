@@ -22,6 +22,7 @@ import br.com.db1.mvp.util.LogUtils;
 public abstract class BaseFragment extends Fragment implements IView {
 
     private static final String TAG = BaseFragment.class.getSimpleName();
+    private static final int DEFAULT_EMPTY_INT = 0;
 
     protected abstract
     @LayoutRes
@@ -55,11 +56,10 @@ public abstract class BaseFragment extends Fragment implements IView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentActivity activity = getActivity();
-        if (activity == null) {
+        if (activity == null)
             throw new RuntimeException();
-        } else {
-            viewDecorator = new BaseViewDecorator(getContext());
-        }
+        else
+            viewDecorator = new BaseViewDecorator(activity);
         initializeComponents();
     }
 
@@ -244,7 +244,7 @@ public abstract class BaseFragment extends Fragment implements IView {
             viewDecorator.showEmptyState();
         } catch (IllegalViewStateException e) {
             LogUtils.info(TAG, e);
-        } catch (IllegalStateException e) {
+        }catch (IllegalStateException e){
             LogUtils.error(TAG, e);
         }
     }
@@ -256,7 +256,7 @@ public abstract class BaseFragment extends Fragment implements IView {
             viewDecorator.hideEmptyState();
         } catch (IllegalViewStateException e) {
             LogUtils.info(TAG, e);
-        } catch (IllegalStateException e) {
+        }catch (IllegalStateException e){
             LogUtils.error(TAG, e);
         }
     }
