@@ -37,7 +37,7 @@ public class BaseViewDecorator implements IView {
     }
 
     public BaseViewDecorator(@NonNull Context context,
-                              IEmptyStateComponent emptyStateComponent, DialogFactory factory) {
+                             IEmptyStateComponent emptyStateComponent, DialogFactory factory) {
         this.context = context;
         this.emptyStateComponent = emptyStateComponent;
         this.factory = factory;
@@ -111,9 +111,11 @@ public class BaseViewDecorator implements IView {
     @Override
     public void showMessage(@DrawableRes int iconRes, @StringRes int titleRes, @NonNull String message,
                             @Nullable DialogInterface.OnClickListener onEvent) {
-        Dialog dialog = factory.makeDialogNoAction(context,
+        Dialog dialog = factory.makeOneOptionDialog(context,
                 context.getString(titleRes),
                 message,
+                context.getString(R.string.ok),
+                onEvent,
                 iconRes);
         dialog.show();
     }
@@ -147,9 +149,11 @@ public class BaseViewDecorator implements IView {
                             @StringRes int titleRes,
                             @StringRes int messageRes,
                             @Nullable DialogInterface.OnClickListener onEvent) {
-        Dialog dialog = factory.makeDialogNoAction(context,
+        Dialog dialog = factory.makeOneOptionDialog(context,
                 context.getString(titleRes),
                 context.getString(messageRes),
+                context.getString(R.string.ok),
+                onEvent,
                 iconRes);
         dialog.show();
     }
