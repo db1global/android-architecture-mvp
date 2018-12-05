@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 
 /**
@@ -38,12 +37,15 @@ public class DefaultDialogFactory implements DialogFactory {
     }
 
     @Override
-    public Dialog makeDialogNoAction(@NonNull Context context,
-                                     String title,
-                                     String message,
-                                     @DrawableRes int icon) {
+    public Dialog makeOneOptionDialog(@NonNull Context context,
+                                      String title,
+                                      String message,
+                                      String buttonOkText,
+                                      DialogInterface.OnClickListener positiveListener,
+                                      int icon) {
         return createBuilderDialog(context, message)
                 .setTitle(title)
+                .setPositiveButton(buttonOkText, positiveListener)
                 .setIcon(icon)
                 .create();
     }
