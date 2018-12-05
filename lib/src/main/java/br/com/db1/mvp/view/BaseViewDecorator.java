@@ -1,14 +1,16 @@
 package br.com.db1.mvp.view;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.FragmentActivity;
 
 import br.com.db1.mvp.R;
+import br.com.db1.mvp.dialogs.DefaultDialogFactory;
 import br.com.db1.mvp.dialogs.DialogFactory;
 import br.com.db1.mvp.util.StringUtils;
 
@@ -17,53 +19,63 @@ import br.com.db1.mvp.util.StringUtils;
  */
 public class BaseViewDecorator implements IView {
 
-    private FragmentActivity parentActivity;
+    private Context context;
     private IEmptyStateComponent emptyStateComponent;
     private ProgressDialog progressDialog;
+    private DialogFactory factory;
 
-    public BaseViewDecorator(@NonNull FragmentActivity parentActivity) {
-        this(parentActivity, null);
+    public BaseViewDecorator(@NonNull Context context) {
+        this(context, null, new DefaultDialogFactory());
     }
 
-    public BaseViewDecorator(@NonNull FragmentActivity parentActivity,
-                             IEmptyStateComponent emptyStateComponent) {
-        this.parentActivity = parentActivity;
+    public BaseViewDecorator(@NonNull Context context, DialogFactory factory) {
+        this(context, null, factory);
+    }
+
+    public BaseViewDecorator(@NonNull Context context, IEmptyStateComponent emptyStateComponent) {
+        this(context, emptyStateComponent, new DefaultDialogFactory());
+    }
+
+    public BaseViewDecorator(@NonNull Context context,
+                             IEmptyStateComponent emptyStateComponent, DialogFactory factory) {
+        this.context = context;
         this.emptyStateComponent = emptyStateComponent;
-        this.progressDialog = new ProgressDialog(parentActivity);
-        this.progressDialog.setCanceledOnTouchOutside(false);
+        this.factory = factory;
+        this.progressDialog = factory.makeProgressDialog(context);
     }
+
 
     @Override
     public void showMessage(@StringRes int titleRes, @StringRes int messageRes,
                             @Nullable DialogInterface.OnClickListener onEvent) {
-        showMessage(titleRes, parentActivity.getString(messageRes), onEvent);
+        showMessage(titleRes, context.getString(messageRes), onEvent);
     }
 
     @Override
     public void showMessage(@StringRes int titleRes, @StringRes int messageRes) {
-        showMessage(titleRes, parentActivity.getString(messageRes), null);
+        showMessage(titleRes, context.getString(messageRes), null);
     }
 
     @Override
     public void showMessage(@StringRes int titleRes, @NonNull String message) {
-        DialogFactory.makeOneOptionDialog(parentActivity,
-                parentActivity.getString(titleRes),
+        Dialog dialog = factory.makeOneOptionDialog(context,
+                context.getString(titleRes),
                 message,
-                parentActivity.getString(R.string.ok),
-                null)
-                .show();
+                context.getString(R.string.ok),
+                null);
+        dialog.show();
     }
 
     @Override
     public void showMessage(@StringRes int titleRes, @NonNull String message,
                             @Nullable DialogInterface.OnClickListener onEvent) {
 
-        DialogFactory.makeOneOptionDialog(parentActivity,
-                parentActivity.getString(titleRes),
+        Dialog dialog = factory.makeOneOptionDialog(context,
+                context.getString(titleRes),
                 message,
-                parentActivity.getString(R.string.ok),
-                onEvent)
-                .show();
+                context.getString(R.string.ok),
+                onEvent);
+        dialog.show();
     }
 
 
@@ -74,7 +86,7 @@ public class BaseViewDecorator implements IView {
                           @StringRes int negativeLabel,
                           @Nullable DialogInterface.OnClickListener onNegativeEvent) {
         showYesNo(titleRes,
-                parentActivity.getString(messageRes),
+                context.getString(messageRes),
                 positiveLabel, onPositiveEvent,
                 negativeLabel, onNegativeEvent);
     }
@@ -85,50 +97,51 @@ public class BaseViewDecorator implements IView {
                           @Nullable DialogInterface.OnClickListener onPositiveEvent,
                           @StringRes int negativeLabel,
                           @Nullable DialogInterface.OnClickListener onNegativeEvent) {
-        DialogFactory.makeYesNoDialog(
-                parentActivity,
-                parentActivity.getString(titleRes),
+        Dialog dialog = factory.makeYesNoDialog(
+                context,
+                context.getString(titleRes),
                 message,
-                parentActivity.getString(positiveLabel),
+                context.getString(positiveLabel),
                 onPositiveEvent,
-                parentActivity.getString(negativeLabel),
-                onNegativeEvent)
-                .show();
+                context.getString(negativeLabel),
+                onNegativeEvent);
+        dialog.show();
     }
 
     @Override
     public void showMessage(@DrawableRes int iconRes, @StringRes int titleRes, @NonNull String message,
                             @Nullable DialogInterface.OnClickListener onEvent) {
-        DialogFactory.makeOneOptionDialog(parentActivity,
-                parentActivity.getString(titleRes),
+        Dialog dialog = factory.makeOneOptionDialog(context,
+                context.getString(titleRes),
                 message,
-                parentActivity.getString(R.string.ok),
+                context.getString(R.string.ok),
                 onEvent,
                 iconRes);
+        dialog.show();
     }
 
     @Override
     public void showMessageWithoutTitle(int messageRes,
                                         @StringRes int buttonLabel,
                                         @Nullable DialogInterface.OnClickListener onEvent) {
-        DialogFactory.makeDialogNoTitle(
-                parentActivity,
-                parentActivity.getString(messageRes),
-                parentActivity.getString(buttonLabel),
-                onEvent)
-                .show();
+        Dialog dialog = factory.makeDialogNoTitle(
+                context,
+                context.getString(messageRes),
+                context.getString(buttonLabel),
+                onEvent);
+        dialog.show();
     }
 
     @Override
     public void showMessageWithoutTitle(@NonNull String message,
                                         @StringRes int buttonLabel,
                                         @Nullable DialogInterface.OnClickListener onEvent) {
-        DialogFactory.makeDialogNoTitle(
-                parentActivity,
+        Dialog dialog = factory.makeDialogNoTitle(
+                context,
                 message,
-                parentActivity.getString(buttonLabel),
-                onEvent)
-                .show();
+                context.getString(buttonLabel),
+                onEvent);
+        dialog.show();
     }
 
     @Override
@@ -136,25 +149,26 @@ public class BaseViewDecorator implements IView {
                             @StringRes int titleRes,
                             @StringRes int messageRes,
                             @Nullable DialogInterface.OnClickListener onEvent) {
-        DialogFactory.makeOneOptionDialog(parentActivity,
-                parentActivity.getString(titleRes),
-                parentActivity.getString(messageRes),
-                parentActivity.getString(R.string.ok),
+        Dialog dialog = factory.makeOneOptionDialog(context,
+                context.getString(titleRes),
+                context.getString(messageRes),
+                context.getString(R.string.ok),
                 onEvent,
                 iconRes);
+        dialog.show();
     }
 
     @Override
     public void showProgress(@Nullable String message) {
         progressDialog.setMessage(StringUtils.isNotEmpty(message) ? message :
-                parentActivity.getString(R.string.progress_message_default));
+                context.getString(R.string.progress_message_default));
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
 
     @Override
     public void showProgress(@StringRes int messageRes) {
-        progressDialog.setMessage(parentActivity.getString(messageRes));
+        progressDialog.setMessage(context.getString(messageRes));
         progressDialog.setCancelable(false);
         progressDialog.show();
     }

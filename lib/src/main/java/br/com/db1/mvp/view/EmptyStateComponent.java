@@ -11,10 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import br.com.db1.mvp.R;
-import br.com.db1.mvp.R2;
 import br.com.db1.mvp.util.LogUtils;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by andre.moraes on 16/02/2018.
@@ -23,41 +20,26 @@ public class EmptyStateComponent extends RelativeLayout implements IEmptyStateCo
 
     private static final String TAG = EmptyStateComponent.class.getSimpleName();
 
-    @BindView(R2.id.cpt_empty_state_iv_image)
     ImageView ivImage;
-    @BindView(R2.id.cpt_empty_state_tv_message)
     TextView tvMessage;
 
     private ViewGroup parent;
     private ViewGroup target;
 
-    public EmptyStateComponent(Context context) {
+    public EmptyStateComponent(Context context, ViewGroup parent, ViewGroup target, @DrawableRes int imageRes, @StringRes int messageRes) {
         super(context);
-
         LayoutInflater.from(context).inflate(R.layout.component_empty_state, this);
-        ButterKnife.bind(this);
-    }
 
-    public EmptyStateComponent setParent(ViewGroup parent) {
         this.parent = parent;
-        return this;
-    }
-
-    public EmptyStateComponent setTarget(ViewGroup target) {
         this.target = target;
-        return this;
-    }
 
-    public EmptyStateComponent setImage(@DrawableRes int imageRes) {
+        tvMessage = findViewById(R.id.cpt_empty_state_tv_message);
+        tvMessage.setText(messageRes);
+
+        ivImage = findViewById(R.id.cpt_empty_state_iv_image);
         if (isValid()) {
             ivImage.setBackgroundResource(imageRes);
         }
-        return this;
-    }
-
-    public EmptyStateComponent setMessage(@StringRes int messageRes) {
-        tvMessage.setText(messageRes);
-        return this;
     }
 
     @Override
