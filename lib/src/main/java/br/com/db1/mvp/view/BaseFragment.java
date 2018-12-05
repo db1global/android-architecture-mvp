@@ -22,7 +22,6 @@ import br.com.db1.mvp.util.LogUtils;
 public abstract class BaseFragment extends Fragment implements IView {
 
     private static final String TAG = BaseFragment.class.getSimpleName();
-    private static final int DEFAULT_EMPTY_INT = 0;
 
     protected abstract
     @LayoutRes
