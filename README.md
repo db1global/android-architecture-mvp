@@ -15,7 +15,7 @@ Whit this library you can start your app using a widely used architecture and fo
 
 Get the latest artifact via gradle
 ```groovy
-implementation 'com.github.db1global:android-architecture-mvp:1.0.0'
+implementation 'com.github.db1global:android-architecture-mvp:1.0.3'
 ```
 
 ## License
