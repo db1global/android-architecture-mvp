@@ -99,9 +99,11 @@ public class BaseViewDecorator implements IView {
     @Override
     public void showMessage(@DrawableRes int iconRes, @StringRes int titleRes, @NonNull String message,
                             @Nullable DialogInterface.OnClickListener onEvent) {
-        DialogFactory.makeDialogNoAction(parentActivity,
+        DialogFactory.makeOneOptionDialog(parentActivity,
                 parentActivity.getString(titleRes),
                 message,
+                parentActivity.getString(R.string.ok),
+                onEvent,
                 iconRes);
     }
 
@@ -134,9 +136,11 @@ public class BaseViewDecorator implements IView {
                             @StringRes int titleRes,
                             @StringRes int messageRes,
                             @Nullable DialogInterface.OnClickListener onEvent) {
-        DialogFactory.makeDialogNoAction(parentActivity,
+        DialogFactory.makeOneOptionDialog(parentActivity,
                 parentActivity.getString(titleRes),
                 parentActivity.getString(messageRes),
+                parentActivity.getString(R.string.ok),
+                onEvent,
                 iconRes);
     }
 

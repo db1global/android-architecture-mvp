@@ -31,12 +31,15 @@ public class DialogFactory {
                 .create();
     }
 
-    public static Dialog makeDialogNoAction(@NonNull Context context,
-                                            String title,
-                                            String message,
-                                            @DrawableRes int icon) {
+    public static Dialog makeOneOptionDialog(@NonNull Context context,
+                                             String title,
+                                             String message,
+                                             String buttonOkText,
+                                             DialogInterface.OnClickListener positiveListener,
+                                             @DrawableRes int icon) {
         return createBuilderDialog(context, message)
                 .setTitle(title)
+                .setPositiveButton(buttonOkText, positiveListener)
                 .setIcon(icon)
                 .create();
     }
