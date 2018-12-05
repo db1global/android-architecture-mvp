@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 
 /**
@@ -18,6 +17,20 @@ public class DefaultDialogFactory implements DialogFactory {
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setCanceledOnTouchOutside(false);
         return progressDialog;
+    }
+
+    @Override
+    public Dialog makeOneOptionDialog(@NonNull Context context,
+                                      String title,
+                                      String message,
+                                      String buttonOkText,
+                                      DialogInterface.OnClickListener positiveListener,
+                                      int icon) {
+        return createBuilderDialog(context, message)
+                .setTitle(title)
+                .setPositiveButton(buttonOkText, positiveListener)
+                .setIcon(icon)
+                .create();
     }
 
     private AlertDialog.Builder createBuilderDialog(Context context,
@@ -34,17 +47,6 @@ public class DefaultDialogFactory implements DialogFactory {
         return createBuilderDialog(context, message)
                 .setTitle(title)
                 .setPositiveButton(buttonOkText, positiveListener)
-                .create();
-    }
-
-    @Override
-    public Dialog makeDialogNoAction(@NonNull Context context,
-                                     String title,
-                                     String message,
-                                     @DrawableRes int icon) {
-        return createBuilderDialog(context, message)
-                .setTitle(title)
-                .setIcon(icon)
                 .create();
     }
 
