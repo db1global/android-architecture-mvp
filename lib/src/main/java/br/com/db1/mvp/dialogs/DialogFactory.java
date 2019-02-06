@@ -21,12 +21,6 @@ public interface DialogFactory {
                                DialogInterface.OnClickListener positiveListener,
                                @DrawableRes int icon);
 
-    Dialog makeOneOptionDialog(@NonNull Context context,
-                               String title,
-                               String message,
-                               String buttonOkText,
-                               DialogInterface.OnClickListener positiveListener);
-
     Dialog makeDialogNoTitle(@NonNull Context context,
                              String message,
                              String buttonLabel,

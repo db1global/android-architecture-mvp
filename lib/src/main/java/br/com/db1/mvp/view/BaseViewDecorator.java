@@ -37,13 +37,12 @@ public class BaseViewDecorator implements IView {
     }
 
     public BaseViewDecorator(@NonNull Context context,
-                              IEmptyStateComponent emptyStateComponent, DialogFactory factory) {
+                             IEmptyStateComponent emptyStateComponent, DialogFactory factory) {
         this.context = context;
         this.emptyStateComponent = emptyStateComponent;
         this.factory = factory;
         this.progressDialog = factory.makeProgressDialog(context);
     }
-
 
     @Override
     public void showMessage(@StringRes int titleRes, @StringRes int messageRes,
@@ -77,7 +76,6 @@ public class BaseViewDecorator implements IView {
                 onEvent);
         dialog.show();
     }
-
 
     @Override
     public void showYesNo(@StringRes int titleRes, @StringRes int messageRes,

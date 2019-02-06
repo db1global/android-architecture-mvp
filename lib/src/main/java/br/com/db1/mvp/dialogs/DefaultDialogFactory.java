@@ -19,6 +19,11 @@ public class DefaultDialogFactory implements DialogFactory {
         return progressDialog;
     }
 
+    private AlertDialog.Builder createBuilderDialog(Context context,
+                                                    String message) {
+        return new AlertDialog.Builder(context).setMessage(message);
+    }
+
     @Override
     public Dialog makeOneOptionDialog(@NonNull Context context,
                                       String title,
@@ -30,23 +35,6 @@ public class DefaultDialogFactory implements DialogFactory {
                 .setTitle(title)
                 .setPositiveButton(buttonOkText, positiveListener)
                 .setIcon(icon)
-                .create();
-    }
-
-    private AlertDialog.Builder createBuilderDialog(Context context,
-                                                    String message) {
-        return new AlertDialog.Builder(context).setMessage(message);
-    }
-
-    @Override
-    public Dialog makeOneOptionDialog(@NonNull Context context,
-                                      String title,
-                                      String message,
-                                      String buttonOkText,
-                                      DialogInterface.OnClickListener positiveListener) {
-        return createBuilderDialog(context, message)
-                .setTitle(title)
-                .setPositiveButton(buttonOkText, positiveListener)
                 .create();
     }
 

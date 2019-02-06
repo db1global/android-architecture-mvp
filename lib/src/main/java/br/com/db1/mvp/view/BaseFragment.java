@@ -55,10 +55,11 @@ public abstract class BaseFragment extends Fragment implements IView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentActivity activity = getActivity();
-        if (activity == null)
+        if (activity == null) {
             throw new RuntimeException();
-        else
-            viewDecorator = new BaseViewDecorator(activity);
+        } else {
+            viewDecorator = new BaseViewDecorator(getContext());
+        }
         initializeComponents();
     }
 
