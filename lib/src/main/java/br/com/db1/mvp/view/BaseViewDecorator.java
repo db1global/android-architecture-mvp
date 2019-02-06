@@ -44,7 +44,6 @@ public class BaseViewDecorator implements IView {
         this.progressDialog = factory.makeProgressDialog(context);
     }
 
-
     @Override
     public void showMessage(@StringRes int titleRes, @StringRes int messageRes,
                             @Nullable DialogInterface.OnClickListener onEvent) {
@@ -77,7 +76,6 @@ public class BaseViewDecorator implements IView {
                 onEvent);
         dialog.show();
     }
-
 
     @Override
     public void showYesNo(@StringRes int titleRes, @StringRes int messageRes,

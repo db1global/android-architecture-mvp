@@ -18,12 +18,6 @@ public interface DialogFactory {
                                String title,
                                String message,
                                String buttonOkText,
-                               DialogInterface.OnClickListener positiveListener);
-
-    Dialog makeOneOptionDialog(@NonNull Context context,
-                               String title,
-                               String message,
-                               String buttonOkText,
                                DialogInterface.OnClickListener positiveListener,
                                @DrawableRes int icon);
 

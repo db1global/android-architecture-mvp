@@ -29,18 +29,6 @@ public class DefaultDialogFactory implements DialogFactory {
                                       String title,
                                       String message,
                                       String buttonOkText,
-                                      DialogInterface.OnClickListener positiveListener) {
-        return createBuilderDialog(context, message)
-                .setTitle(title)
-                .setPositiveButton(buttonOkText, positiveListener)
-                .create();
-    }
-
-    @Override
-    public Dialog makeOneOptionDialog(@NonNull Context context,
-                                      String title,
-                                      String message,
-                                      String buttonOkText,
                                       DialogInterface.OnClickListener positiveListener,
                                       int icon) {
         return createBuilderDialog(context, message)
